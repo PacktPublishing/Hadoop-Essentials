@@ -1,0 +1,44 @@
+# Set up Hive
+$ cd $HADOOP_HOME/bin
+$ ./hadoop dfs -mkdir /tmp 
+$ ./hadoop dfs -mkdir /user/hive/warehouse
+$ ./hadoop dfs -chmod g+w /tmp 
+$ ./hadoop dfs -chmod g+w /user/hive/warehouse
+
+$ cd $HIVE_HOME/bin
+$ ./hive
+
+-- Create Database
+hive> Create database shiva;
+
+-- Show Databases
+hive> show databases;
+
+-- Use Database
+hive> use shiva;
+
+-- Create Hive Table
+hive> Create table person (name STRING , add STRING);
+
+-- Show tables
+hive>Show tables;
+
+-- Describe table
+hive> describe person;
+
+-- Alter table
+hive> Alter table person ADD COLUMNS (PNO  INT);
+
+-- Drop table
+hive>drop table <person>; -- Table name instead of person
+
+-- Loading Input Data
+hive>LOAD DATA INPATH 'hdfs://localhost:9000/user/hive/shiva/PersonData.csv' OVERWRITE INTO TABLE person;
+
+-- Select filter
+hive>select * from person where name = 'Alvin Joyner’;
+
+-- Custom UDF - Need the UDF class in a jar
+hive> add jar lowerUDF.jar;
+hive> create temporary function my_lowerUDF as ‘LowerUDF’;
+hive> select my_lowerUDF(title), sum(freq) from titles group by my_lowerUDF(title);

@@ -1,0 +1,83 @@
+Single Agent Example
+
+We will look at an example of the logger example and save it in HDFS and a memory channel.
+
+#Create a .properties file 
+
+# Source of an Agent with tail
+agent.source = source_log-tail
+agent.sources.source_log-tail.type = exec
+agent.sources.source_log-tail.command = tail -F /log/logger.log
+agent.sources.source_log-tail.channels = memoryChannel
+
+# Sink of an Agent to save in HDFS
+agent.sinks = log-hdfs
+agent.sinks.log-hdfs.channel = memoryChannel
+agent.sinks.log-hdfs.type = hdfs
+agent.sinks.log-hdfs.hdfs.path = /log/logger.log
+
+# Channel of an Agent to store in memory
+agent.channels = memoryChannel
+agent.channels.memoryChannel.type = memory
+agent.channels.memoryChannel.capacity = 10000
+agent.channels.memoryChannel.transactionCapacity = 10000
+agent.channels.memoryChannel.byteCapacityBufferPercentage = 20
+agent.channels.memoryChannel.byteCapacity = 800000
+
+
+To start the flume process
+	$ flume-ng agent -n agent -c conf -f conf/flume-conf.properties -Dflume.root.logger=INFO,console 
+
+	
+----------------------------------------------------
+
+Configure a Multi Agent setup 
+
+To configure a multi agent setup we have to link up the agents via an Avro/Thrift where a Avro sink type of an Agent acts as an Avro source type of another Agent. We should have two Agents first one will have a logger source and an Avro Sink.
+
+# .properties for Agent 1
+	# Source of an Agent with tail
+	agent1.source = source_log-tail
+	agent1.sources.source_log-tail.type = exec
+	agent1.sources.source_log-tail.command = tail -F /log/logger.log
+	agent1.sources.source_log-tail.channels = memoryChannel
+
+	agent1.sinks.avro-sink.type = avro
+	agent1.sinks.avro-sink.hostname = 192.168.0.1 #<hostname>
+	agent1.sinks.avro-sink.port = 1111
+
+	agent1.channels = memoryChannel
+	agent1.channels.memoryChannel.type = memory
+	agent1.channels.memoryChannel.capacity = 10000
+	agent1.channels.memoryChannel.transactionCapacity = 10000
+	agent1.channels.memoryChannel.byteCapacityBufferPercentage = 20
+	agent1.channels.memoryChannel.byteCapacity = 800000
+
+The second Agent will have the Avro source of the first Agent sink 
+# .properties for Agent 2	
+	# Source of an Agent with Avro source listening to sink of first Agent
+	agent2.source = avro-sink
+	agent2.sources.avro-sink.type = avro
+	agent2.sources.avro-sink.hostname = 192.168.0.1 #<hostname>
+	agent2.sources.avro-sink.port = 1111
+	agent2.sources.avro-sink.channels = memoryChannel
+
+	# Sink of an Agent to save in HDFS
+	agent2.sinks = log-hdfs
+	agent2.sinks.log-hdfs.channel = memoryChannel
+	agent2.sinks.log-hdfs.type = hdfs
+	agent2.sinks.log-hdfs.hdfs.path = /log/logger.log
+
+	agent2.channels = memoryChannel
+	agent2.channels.memoryChannel.type = memory
+	agent2.channels.memoryChannel.capacity = 10000
+	agent2.channels.memoryChannel.transactionCapacity = 10000
+	agent2.channels.memoryChannel.byteCapacityBufferPercentage = 20
+	agent2.channels.memoryChannel.byteCapacity = 800000
+
+	
+Start the flume agents in different nodes
+start Agent2 in node 1
+	$ flume-ng agent -n agent2 -c conf -f conf/flume-conf.properties -Dflume.root.logger=INFO,console 
+start Agent1 in node 2
+	$ flume-ng agent -n agent1 -c conf -f conf/flume-conf.properties -Dflume.root.logger=INFO,console 

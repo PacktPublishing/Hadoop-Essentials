@@ -1,0 +1,136 @@
+●	Import an entire table
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities
+
+●	Import subset of data
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--where "country = 'USA'"
+
+●	Change file format by default the data will be saved in tab separated csv format but Sqoop has option for Hadoop SequenceFile, Avro binary format and Parquet file.
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--as-sequencefile
+
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--as-avrodatafile
+
+●	Compressing Imported data
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--table cities \
+--compress \
+--compression-codec org.apache.hadoop.io.compress.BZip2Codec
+
+●	Bulk Import
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--table cities \
+--direct
+
+●	Importing all your table
+sqoop import-all-tables \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop
+
+●	Incremental Import
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table visits \
+--incremental append \
+--check-column id \
+--last-value 1
+
+●	Free form Query Import
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--query 'SELECT normcities.id, \
+countries.country, \
+normcities.city \
+FROM normcities \
+JOIN countries USING(country_id) \
+WHERE $CONDITIONS' \
+--split-by id \
+--target-dir cities
+
+●	Custom Boundary Query Import
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--query 'SELECT normcities.id, \
+countries.country, \
+normcities.city \
+FROM normcities \
+JOIN countries USING(country_id) \
+WHERE $CONDITIONS' \
+--split-by id \
+--target-dir cities \
+--boundary-query "select min(id), max(id) from normcities"
+
+
+------- Export
+
+●	Exporting files under HDFS directory to a table
+sqoop export \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--export-dir cities
+
+
+●	Batch Inserts Export
+sqoop export \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--export-dir cities \
+--batch
+
+
+●	Updating existing Data set
+sqoop export \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--update-key id
+
+●	Upsert Export
+sqoop export \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--update-key id \
+--update-mode allowinsert
+
+●	Column Export
+sqoop export \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table cities \
+--columns country,city

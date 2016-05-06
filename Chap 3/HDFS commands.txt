@@ -1,0 +1,56 @@
+1.	Create a directory in HDFS at given path(s).
+•	Usage:
+hadoop fs -mkdir <paths>
+•	Example:
+hadoop fs -mkdir /user/shiva/dir1 /user/shiva/dir2
+2.	List the contents of a directory.
+•	Usage:
+hadoop fs -ls <args>
+•	Example:
+hadoop fs -ls /user/shiva
+3.	Put and Get a file in HDFS.
+•	Usage(Put):
+hadoop fs -put <localsrc> ... <HDFS_dest_Path>
+•	Example:
+hadoop fs -put /home/shiva/Samplefile.txt  /user/shiva/dir3/
+•	Usage(Get):
+hadoop fs -get <hdfs_src> <localdst>
+•	Example:
+hadoop fs -get /user/shiva/dir3/Samplefile.txt /home/
+4.	See contents of a file
+•	Usage:
+hadoop fs -cat <path[filename]>
+•	Example:
+hadoop fs -cat /user/shiva/dir1/abc.txt
+5.	Copy a file from source to destination
+•	Usage:
+hadoop fs -cp <source> <dest>
+•	Example:
+hadoop fs -cp /user/shiva/dir1/abc.txt /user/shiva/dir2
+6.	Copy a file from/To Local file system to HDFS
+•	Usage of copyFromLocal:
+hadoop fs -copyFromLocal <localsrc> URI
+•	Example:
+hadoop fs -copyFromLocal /home/shiva/abc.txt  /user/shiva/abc.txt
+•	Usage of copyToLocal
+hadoop fs -copyToLocal [-ignorecrc] [-crc] URI <localdst>
+7.	Move file from source to destination.
+•	Usage:
+hadoop fs -mv <src> <dest>
+•	Example:
+hadoop fs -mv /user/shiva/dir1/abc.txt /user/shiva/dir2
+8.	Remove a file or directory in HDFS.
+•	Usage:
+hadoop fs -rm <arg>
+•	Example:
+hadoop fs -rm /user/shiva/dir1/abc.txt
+.
+•	Usage of recursive version of delete:
+hadoop fs -rmr <arg>
+•	Example:
+hadoop fs -rmr /user/shiva/
+9.	Display last few lines of a file.
+•	Usage:
+hadoop fs -tail <path[filename]>
+•	Example:
+hadoop fs -tail /user/shiva/dir1/abc.txt

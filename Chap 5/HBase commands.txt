@@ -1,0 +1,36 @@
+-- To enter in HBase shell mode 
+$ ${HBASE_HOME}/bin/hbase shell
+
+-- HBase Shell; 
+hbase>
+You can use 'help' to get a listing of commands. 
+
+-- Create    
+hbase> create 'test', 'cf'    
+
+-- List
+hbase> list 'test'
+-- TABLE
+-- test
+          
+-- Put
+hbase> put 'test', 'row1', 'cf:a', 'value1'
+
+hbase> put 'test', 'row2', 'cf:b', 'value2'
+
+hbase> put 'test', 'row3', 'cf:c', 'value3'
+          
+-- Scan
+hbase> scan 'test'
+          
+-- Get
+hbase> get 'test', 'row1'
+           
+          
+-- Disable
+hbase> disable 'test'
+
+hbase> enable 'test'
+          
+-- Drop
+hbase> drop 'test'          

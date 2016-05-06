@@ -1,0 +1,22 @@
+// Loading data 
+movies = LOAD '/user/biadmin/shiva/movies_data.csv' USING PigStorage(',') as (id,name,year,rating,duration);
+
+// View the data
+DUMP movies;
+
+// Limit records
+movies_limit_10 = LIMIT movies 10;
+DUMP movies_limit_10;
+
+//ForEach Generate Example
+movie_duration = FOREACH movies GENERATE name, (double)(duration/60);
+
+// Filter Example
+movies_greater_than_four = FILTER movies BY (float)rating>4.0;
+movies_greater_than_four_and_2012 = FILTER movies BY (float)rating>4.0 AND year > 2012;
+
+// Group By
+grouped_by_year = group movies by year;
+
+// Aggregation Example
+count_by_year = FOREACH grouped_by_year GENERATE group, COUNT(movies);
