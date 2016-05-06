@@ -5,7 +5,7 @@ This is the code repository for [Hadoop-Essentials](https://www.packtpub.com/big
 ## Instructions and Navigation:
 
 All of the code is organized into folders.
-Each folder starts with `c` followed by the chapter number.
+Each folder starts with `C` followed by the chapter number.
 For example, `HDFS commands.txt` is a file from Chap 1, and `HBase commands.txt` is one from Chap 5.
 
 
