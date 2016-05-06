@@ -11,8 +11,7 @@ For example, `HDFS commands.txt` is a file from Chap 1, and `HBase commands.txt`
 
 ## What you need for the code files:
 
-A prerequisite for this book is good understanding of Java programming and basics 
-of distributed computing will be very helpful and an interest to understand about 
+A prerequisite of Java programming and basics of distributed computing will be very helpful and an interest to understand about 
 Hadoop and its ecosystem components.
 The code and syntax have been tested in Hadoop 2.4.1 and other compatible ecosystem component versions, but may vary in the 
 newer version.
