@@ -2,14 +2,15 @@
 
 This is the code repository for [Hadoop-Essentials](https://www.packtpub.com/big-data-and-business-intelligence/hadoop-essentials?utm_source=GitHub&utm_medium=repository&utm_campaign=9781784396688), published by Packt. It contains all the supporting project files necessary to work through the book from start to finish.
 
-## Instructions and Navigation
+## Instructions and Navigation:
 
 All of the code is organized into folders.
 Each folder starts with `c` followed by the chapter number.
 For example, `HDFS commands.txt` is a file from Chap 1, and `HBase commands.txt` is one from Chap 5.
 
 
-## What you need for this book
+## What you need for the code files:
+
 A prerequisite for this book is good understanding of Java programming and basics 
 of distributed computing will be very helpful and an interest to understand about 
 Hadoop and its ecosystem components.
