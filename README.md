@@ -2,7 +2,7 @@
 
 This is the code repository for [Hadoop-Essentials](https://www.packtpub.com/big-data-and-business-intelligence/hadoop-essentials?utm_source=GitHub&utm_medium=repository&utm_campaign=9781784396688), published by Packt. It contains all the supporting project files necessary to work through the book from start to finish.
 
-## Instructions and Navigation:
+## Software Requirements
 
 All of the code is organized into folders.
 Each folder starts with `C` followed by the chapter number.
